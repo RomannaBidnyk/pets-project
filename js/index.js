@@ -4,4 +4,6 @@ fetch("https://api.thecatapi.com/v1/images/search")
     let imagesData = JSON.parse(JSON.stringify(data));
     console.log(imagesData);
   })
-  .catch();
+  .catch((error) => {
+    console.error("There was a problem with the fetch operation:", error);
+  });
