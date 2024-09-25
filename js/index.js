@@ -5,10 +5,13 @@ const userId = "my-user-123456";
 
 let currentImageId;
 
-const catImageElement = document.getElementById("catImage");
-const addFavoriteButton = document.getElementById("addFavoriteButton");
-const favoritesList = document.getElementById("favoritesList");
-const nextCatButton = document.getElementById("nextCatButton");
+const catImageElement = document.querySelector("#catImage");
+const addFavoriteButton = document.querySelector("#addFavoriteButton");
+const favoritesList = document.querySelector("#favoritesList");
+const nextCatButton = document.querySelector("#nextCatButton");
+const viewFavoritesButton = document.querySelector("#viewFavoritesButton");
+const favoritesSection = document.querySelector("#favoritesSection");
+favoritesSection.hidden = true;
 
 async function getCat() {
   try {
@@ -56,7 +59,10 @@ async function addToFavorites() {
 
     await getCat();
 
-    await getAllFavorites();
+    if (!favoritesSection.hidden) {
+      await getAllFavorites();
+    }
+    
   } catch (error) {
     console.error("Error adding to favourites:", error);
   }
@@ -131,6 +137,15 @@ nextCatButton.addEventListener("click", async () => {
     await getCat();
   } catch (error) {
     console.error("Error fetching new random cat:", error);
+  }
+});
+
+viewFavoritesButton.addEventListener("click", async () => {
+  try {
+    favoritesSection.hidden = favoritesSection.hidden ? false : true;
+    await getAllFavorites();
+  } catch (error) {
+    console.error("Error fetching favorites cat:", error);
   }
 });
 
