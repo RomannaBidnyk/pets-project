@@ -40,6 +40,11 @@ button:hover {
   background-color: #215397;
 }
 
+#nextCatButton {
+  position: relative;
+  float: right;
+}
+
 #favoritesSection {
   width: 100%;
   max-width: 800px;
