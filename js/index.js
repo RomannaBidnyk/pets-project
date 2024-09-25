@@ -1,12 +1,17 @@
-const apiKey = "DEMO-API-KEY";
+const apiKey =
+  "live_6IRZQSprgW0fdwVj6VhoWvTzHpJayvnDjuGKHe4n5AvXIqgC04pkFVf7QmLft9Aw";
 const baseUrl = "https://api.thecatapi.com";
 const userId = "my-user-123456";
 
 let currentImageId;
 
-const catImageElement = document.getElementById("catImage");
-const addFavoriteButton = document.getElementById("addFavoriteBtn");
-const favoritesList = document.getElementById("favoritesList");
+const catImageElement = document.querySelector("#catImage");
+const addFavoriteButton = document.querySelector("#addFavoriteButton");
+const favoritesList = document.querySelector("#favoritesList");
+const nextCatButton = document.querySelector("#nextCatButton");
+const viewFavoritesButton = document.querySelector("#viewFavoritesButton");
+const favoritesSection = document.querySelector("#favoritesSection");
+favoritesSection.hidden = true;
 
 async function getCat() {
   try {
@@ -26,7 +31,6 @@ async function getCat() {
     const imageUrl = catData[0].url;
 
     catImageElement.src = imageUrl;
-    catImageElement.style.display = "block";
     console.log("Selected Image ID:", currentImageId);
 
     await getAllFavorites();
@@ -55,7 +59,10 @@ async function addToFavorites() {
 
     await getCat();
 
-    await getAllFavorites();
+    if (!favoritesSection.hidden) {
+      await getAllFavorites();
+    }
+    
   } catch (error) {
     console.error("Error adding to favourites:", error);
   }
@@ -81,15 +88,15 @@ async function getAllFavorites() {
       img.src = favorite.image.url;
       img.alt = "Favorite Cat Image";
 
-      const deleteBtn = document.createElement("button");
-      deleteBtn.innerText = "Delete from Favorites";
-      deleteBtn.className = "delete-btn";
-      deleteBtn.addEventListener("click", async () => {
+      const deleteButton = document.createElement("button");
+      deleteButton.innerText = "Delete from Favorites";
+      deleteButton.className = "delete-button";
+      deleteButton.addEventListener("click", async () => {
         await deleteFromFavorites(favorite.id);
       });
 
       favoriteItem.appendChild(img);
-      favoriteItem.appendChild(deleteBtn);
+      favoriteItem.appendChild(deleteButton);
       favoritesList.appendChild(favoriteItem);
     });
   } catch (error) {
@@ -122,6 +129,23 @@ addFavoriteButton.addEventListener("click", async () => {
     await addToFavorites();
   } catch (error) {
     console.error("Error adding cat to favorites:", error);
+  }
+});
+
+nextCatButton.addEventListener("click", async () => {
+  try {
+    await getCat();
+  } catch (error) {
+    console.error("Error fetching new random cat:", error);
+  }
+});
+
+viewFavoritesButton.addEventListener("click", async () => {
+  try {
+    favoritesSection.hidden = favoritesSection.hidden ? false : true;
+    await getAllFavorites();
+  } catch (error) {
+    console.error("Error fetching favorites cat:", error);
   }
 });
 

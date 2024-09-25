@@ -1,22 +1,28 @@
 #catImage {
   max-width: 400px;
   margin-top: 20px;
+  display: block;
 }
-#buttons {
+
+button {
   margin-top: 10px;
 }
-#favorites {
+
+#favoritesSection {
   margin-top: 30px;
 }
+
 .favorite-item {
   display: flex;
   align-items: center;
   margin: 10px 0;
 }
+
 .favorite-item img {
   max-width: 100px;
   margin-right: 10px;
 }
-.delete-btn {
+
+.delete-button {
   margin-left: 10px;
 }
