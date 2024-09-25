@@ -32,6 +32,7 @@ async function getCat() {
 
     catImageElement.src = imageUrl;
     console.log("Selected Image ID:", currentImageId);
+    console.log("Selected cat data:", catData);
 
     await getAllFavorites();
   } catch (error) {
@@ -62,7 +63,6 @@ async function addToFavorites() {
     if (!favoritesSection.hidden) {
       await getAllFavorites();
     }
-    
   } catch (error) {
     console.error("Error adding to favourites:", error);
   }
